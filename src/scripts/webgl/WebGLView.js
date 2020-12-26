@@ -1,8 +1,11 @@
-import 'three';
+import * as Three from 'three';
 import { TweenLite } from 'gsap/TweenMax';
 
 import InteractiveControls from './controls/InteractiveControls';
 import Particles from './particles/Particles';
+
+import oc from 'three-orbit-controls'
+const OrbitControls = oc(Three)
 
 const glslify = require('glslify');
 
@@ -11,13 +14,12 @@ export default class WebGLView {
 	constructor(app) {
 		this.app = app;
 
-		this.samples = [
-			'images/sample-01.png',
-			'images/sample-02.png',
-			'images/sample-03.png',
-			'images/sample-04.png',
-			'images/sample-05.png',
-		];
+		this.samples = [];
+		if (window.innerWidth <= 768) {
+			this.samples.push('images/image-tablet.png');
+		} else {
+			this.samples.push('images/image.png');
+		}
 
 		this.initThree();
 		this.initParticles();
@@ -35,11 +37,28 @@ export default class WebGLView {
 		this.camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 10000);
 		this.camera.position.z = 300;
 
-		// renderer
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+		if (window.innerWidth <= 768 && window.innerWidth > 411) {
+			this.camera.zoom = 1;
+		} else if (window.innerWidth <= 411) {
+			this.camera.zoom = 0.7;
+		} else {
+			this.camera.zoom = 1;
+		}
 
-        // clock
+		// renderer
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+  	// clock
 		this.clock = new THREE.Clock(true);
+
+		this.controls = new OrbitControls( this.camera, this.renderer.domElement );
+		this.controls.enableKeys = false;
+		this.controls.maxDistance = 400;
+		this.controls.minDistance = 50;
+		this.controls.minPolarAngle = 0.5;
+		this.controls.maxPolarAngle = 2.5;
+		this.controls.minAzimuthAngle = -1.5;
+		this.controls.maxAzimuthAngle = 1.5;
 	}
 
 	initControls() {
@@ -57,8 +76,8 @@ export default class WebGLView {
 
 	update() {
 		const delta = this.clock.getDelta();
-
 		if (this.particles) this.particles.update(delta);
+		this.controls.update()
 	}
 
 	draw() {

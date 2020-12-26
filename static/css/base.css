@@ -10,114 +10,42 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
 }
 
 body {
-	--color-text: #fff;
-	--color-bg: #0e0e0f;
-	--color-link: #EE9A00;
-	--color-link-hover: #8e5c00;
-	color: var(--color-text);
-	background-color: var(--color-bg);
-	font-family: Futura, "futura-pt", Arial, sans-serif;
+	background-color: #222;
+	margin: 0;
+	overflow: hidden;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
 a {
 	text-decoration: none;
-	color: var(--color-link);
+	color: white;
 	outline: none;
+	padding: 0px 25px;
+	transition: all .2s ease-in-out;
 }
 
-a:hover,
-a:focus {
-	color: var(--color-link-hover);
-	outline: none;
+a:hover {
+	transform: scale(1.1);
 }
 
 .frame {
-	padding: 3rem 5vw;
-	text-align: center;
-	position: relative;
-	z-index: 1000;
-}
-
-.frame__title {
-	font-size: 1rem;
-	margin: 0 0 1rem;
-	font-weight: normal;
-}
-
-.frame__links {
-	display: inline;
+	position: fixed;
+	z-index: 10000;
+	display: flex;
+	width: 100%;
+	max-width: none;
+	height: 100vh;
+	padding: 3rem;
+	justify-content: center;
+	align-items: flex-end;
+	pointer-events: none;
 }
 
 .frame a {
-	text-transform: lowercase;
-}
-
-.frame__github,
-.frame__links a:not(:last-child),
-.frame__demos a:not(:last-child) {
-	margin-right: 1rem;
-}
-
-.content {
-	display: flex;
-	flex-direction: column;
-	width: 100vw;
-	height: calc(100vh - 13rem);
-	position: relative;
-	justify-content: flex-start;
-	align-items: center;
+	pointer-events: auto;
 }
 
 @media screen and (min-width: 53em) {
-	.frame {
-		position: fixed;
-		text-align: left;
-		z-index: 10000;
-		top: 0;
-		left: 0;
-		display: grid;
-		align-content: space-between;
-		width: 100%;
-		max-width: none;
-		height: 100vh;
-		padding: 3rem;
-		pointer-events: none;
-		grid-template-columns: 75% 25%;
-		grid-template-rows: auto auto auto;
-		grid-template-areas: 'title links'
-							'... ...'
-							'github demos';
-	}
-	.frame__title-wrap {
-		grid-area: title;
-		display: flex;
-	}
-	.frame__title {
-		margin: 0;
-	}
-	.frame__tagline {
-		position: relative;
-		margin: 0 0 0 1rem;
-		padding: 0 0 0 1rem;
-		opacity: 0.5;
-	}
-	.frame__github {
-		grid-area: github;
-		justify-self: start;
-		margin: 0;
-	}
-	.frame__links {
-		grid-area: links;
-		padding: 0;
-		justify-self: end;
-	}
-	.frame a {
-		pointer-events: auto;
-	}
-	.content {
-		height: 100vh;
-		justify-content: center;
-	}
+
 }
