@@ -7,6 +7,6 @@ module.exports = merge(common, {
 	devServer: {
 		contentBase: './dist',
 		host: '0.0.0.0',
-		public: 'interactive-particles-e6gqw.ondigitalocean.app'
+		public: 'robertjenssen.com'
 	}
 });
